@@ -20,10 +20,10 @@ function isActivee(route){
     <Link href ="/">
     <Menu.Item header active ={isActivee('/index')}>
             <Image size ="mini" 
-            src="/static/logo.svg"
+            src=""
             style={{ marginRight: '1em'}}/>
                
-          Example Project
+         One Summary
           </Menu.Item>
         </Link>
 
