@@ -6,7 +6,7 @@ function ProductList({ products }) {
         header: product.name,
         image: product.exampleUrl,
         meta: product.school_of,
-        description: products.description,
+        description: product.description, 
         extra: `${product.price}    BATH` ,
       color: "red",
       fluid: false,
