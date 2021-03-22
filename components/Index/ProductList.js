@@ -4,7 +4,6 @@ function ProductList({ products }) {
   function mapProductsToItems(products) {
     return products.map(product => ({
         header: product.name,
-        image: product.exampleUrl,
         meta: product.school_of,
         description: product.description, 
         extra: `${product.price}    BATH` ,
@@ -16,12 +15,16 @@ function ProductList({ products }) {
   }
 
   return (
-    <Card.Group
+   
+    <Card.Group  style={{width: '', 
+    height: '40%', }}
       stackable
       itemsPerRow="2"
       center
+      large
       items={mapProductsToItems(products)}
     />
+   
   );
 }
 

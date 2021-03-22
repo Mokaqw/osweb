@@ -15,7 +15,8 @@ function isActivee(route){
   return route ==  router.pathname
 }
 
-  return (<Menu size="huge" fluid id="menu" inverted>
+  return (
+    <Menu stackable size="huge" fluid id="menu" inverted>
     <Container children>
     <Link href ="/">
     <Menu.Item header active ={isActivee('/index')}>
@@ -27,29 +28,23 @@ function isActivee(route){
           </Menu.Item>
         </Link>
 
-        <Link href ="/">
+        <Link href ="/buy">
         <Menu.Item header active ={isActivee('/index')}>
-           <Icon
-           name ="cart"
-           size="large"/>
+          
            Buy Sheet
           </Menu.Item>
 
         </Link>
         <Link href ="/create">
           <Menu.Item header active ={isActivee('/create')}>
-           <Icon
-           name ="add square"
-           size="large"/>
+         
            Sell Sheet
           </Menu.Item>
         </Link>
 
         <Link href ="/cart">
           <Menu.Item header active ={isActivee('/cart')}>
-           <Icon
-           name ="cart"
-           size="large"/>
+           
            Cart
           </Menu.Item>
         </Link>
@@ -92,6 +87,7 @@ function isActivee(route){
           </Menu.Item>
           </Link>
 </>)}
+
     </Container>
 
   </Menu>);
