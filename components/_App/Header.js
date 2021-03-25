@@ -29,7 +29,7 @@ function isActivee(route){
         </Link>
 
         <Link href ="/buy">
-        <Menu.Item header active ={isActivee('/index')}>
+        <Menu.Item header active ={isActivee('/buy')}>
           
            Buy Sheet
           </Menu.Item>
