@@ -1,11 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import ProductList from '../components/Index/ProductList';
-
+import {Header  ,Divider  } from 'semantic-ui-react'
 
 
 function Buy({products}) {
-  return <ProductList products ={products}/>;
+  return <> 
+  <Header as="h2" >
+    Explore sheet
+  </Header>
+  <Divider />
+  <ProductList products ={products}/>
+  </>;
 }
 Buy.getInitialProps = async () =>{
   const url ='http://localhost:3000/api/products'
