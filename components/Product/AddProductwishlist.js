@@ -4,7 +4,7 @@ function AddProductToCart() {
   return (
     <Button
     content="Add to wishlist"
-        icon= "wishlist"
+        icon= "star"
         color="green"
     />  
   );
