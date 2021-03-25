@@ -7,7 +7,7 @@ import HeadContent from "./HeadContent";
 
 function Layout({ children }) {
   return (
-    <div style={{backgroundColor: "#FFFAF5"}}>
+    <div style={{backgroundColor: "#FFFAF5" , }}>
       <Head>
         <HeadContent />
         <link rel="stylesheet" type="text/css" href="/static/styles.css" />
@@ -19,7 +19,7 @@ function Layout({ children }) {
         <title>Onesummary</title>
       </Head>
       <Header />    
-    <Container fluid text style={{ paddingTop: "3em" }}   >
+    <Container textAlign='justified'  text style={{ paddingTop: "3em",minHeight: "100vh",}}   >
         {children}
       </Container>
     </div>
