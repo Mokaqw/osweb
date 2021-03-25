@@ -17,3 +17,4 @@ Product.getInitialProps = async ({ query: { _id } }) => {
 };
 
 export default Product;
+
