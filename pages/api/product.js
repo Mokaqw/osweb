@@ -24,7 +24,8 @@ async function handleGetRequest(req, res) {
 }
 async function handlePostRequest(req, res) {
   const { name, price, description, example, uploadfile, school_of} = req.body;
-      if (!name || !price || !description || !example || !uploadfile || !school_of) {
+  try {
+  if (!name || !price || !description || !example || !uploadfile || !school_of) {
           return res.status(422).send("Please complete all the fields.");
       }
       const product = await new Product({
@@ -36,8 +37,12 @@ async function handlePostRequest(req, res) {
           school_of
         
       }).save();
-      res.status(201).json(product);//201 status code for product created.
- 
+      res.status(201).json(product);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error in creating product");
+  }
+
   }
 async function handleDeleteRequest(req, res) {
   const { _id } = req.query;
