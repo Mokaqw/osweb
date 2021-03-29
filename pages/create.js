@@ -1,110 +1,168 @@
-import React from 'react';
-
-import {Form, Input ,TextArea, Button , Image ,
-  Icon ,Message ,Header ,Grid ,Divider ,Container, Label ,Select  } from 'semantic-ui-react'
+import React, { useEffect } from "react";
+import axios from 'axios';
+import {
+  Form,  Input,  TextArea,  Button,  Image,  Message,  Header,  Icon ,Divider  ,Select
+} from "semantic-ui-react";
+const schoolgroup = [
+  {name:'School of Integrative Medicine',text:'School of Integrative Medicine', value: 'School of Integrative Medicine'}
+ ,{name:'School of Cosmetic Science',text:'School of Cosmetic Science', value: 'School of Cosmetic Science'}
+ ,{name:'School of Dentistry',text:'School of Dentistry', value: 'School of Dentistry'}
+ ,{name:'School of Medicine',text:'School of Medicine', value: 'School of Medicine'}
+ ,{name:'School of Nursing',text:'School of Nursing', value: 'School of Nursing'}
+ ,{name:'School of Science',text:'School of Science', value: 'School of Science'}
+ ,{name:'School of Information Technology',text:'School of Information Technology', value: 'School of Information Technology'}
+ ,{name:'School of Social Innovation',text:'School of Social Innovation', value: 'School of Social Innovation'}
+ ,{name:'School of Agro-Industry',text:'School of Agro-Industry', value: 'School of Agro-Industry'}
+ ,{name:'School of Management',text:'School of Management', value: 'School of Management'}
+ ,{name:'School of Liberal Arts',text:'School of Liberal Arts', value: 'School of School of Law'}
+ ,{name:'School of Sinology',text:'School of Sinology' ,value: 'School of Sinology'}
+ ,{name:"School  of Law", text:"School  of Law", value: "School  of Law"}]
+const INITIAL_PRODUCT = {
+    name: "",
+    price: "",
+    description:"" ,
+    example: "",
+    uploadfile:"" ,
+    school_of:"",
+};
 
 function CreateProduct() {
-  const SchoolOf = [
-    { key: 'IM', text: 'School of Integrative Medicine', value: 'School of Integrative Medicine' },
-    { key: 'CS', text: 'School of Cosmetic Science', value: 'School of Cosmetic Science' },
-    { key: 'HS', text: 'School of Health Science', value: 'School of Health Science' },
-    { key: 'Den', text: 'School of Dentistry', value: 'School of Dentistry' },
-    { key: 'Med', text: 'School of Medicine', value: 'School of Medicine' },
-    { key: 'Nurse', text: 'School of Nursing', value: 'School of Nursing' },
-    { key: 'Science', text: 'School of Science', value: 'School of Science' },
-    { key: 'IT', text: 'School of Information Technology  ', value: 'School of Information Technology' },
-    { key: 'SI', text: 'School of Social Innovation', value: 'School of Social Innovation' },
-    { key: 'AI', text: 'School of Agro-Industry', value: 'School of Agro-Industry ' },
-    { key: 'MA', text: 'School of Management', value: 'male' },
-    { key: 'LA', text: 'School of Liberal Arts    ', value: 'School of Liberal Arts' },
-    { key: 'SINO', text: 'School of Sinology', value: 'School of Sinology' },
-    { key: 'LAW', text: 'School of Law', value: 'School of Law' },
+  const [product, setProduct] = React.useState(INITIAL_PRODUCT);
+  const [mediaPreview, setMediaPreview] = React.useState("");
+  const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(true);
+  const [error, setError] = React.useState("");
 
-  ]
-  const [product ,setProduct] = React.useState({
-    name : "",
-    price : "",
-    description : "",
-    school_of : "",
-    example : "",
-    uploadfile : "",
+  function handleChange(event) {
+    const { name, value, files } = event.target;
+    if (name === "example") {   
+      setProduct(prevState => ({ ...prevState, example: files[0] }));
+      setMediaPreview(window.URL.createObjectURL(files[0]));
+    }else if (name === "uploadfile") {   
+        setProduct(prevState => ({ ...prevState, uploadfile: files[0] }));
+    } else {
+      setProduct(prevState => ({ ...prevState, [name]: value }));    
+    }
+  }
 
-  })
-function handleChange(event){
-  const {name, value}=event.target
-  setProduct({[name] : value})
-  console.log(product)
+  async function handleImageUpload() {
+    const data = new FormData();
+    data.append('file', product.example);
+    data.append('upload_preset', 'onsummary');
+    data.append('cloud_name', 'moss4582');
+    const response = await axios.post(process.env.CLOUDINARY_URL, data);
+    const example = response.data.url;
+    return example;
+  }
+
+
+
+ async function handleSubmit(event) { 
+    event.preventDefault();
+    console.log(product);
+
+   /* setLoading(true);
+    const example = await handleImageUpload();
+    const url = 'http://localhost:3000/api/product';
+    const { name, price, description,school_of ,uploadfile } = product;
+    const payload = { name, price, description, example ,school_of ,uploadfile };
+    const response = await axios.post(url, payload);
+    console.log({ response });
+    setLoading(false);*/
+    setProduct(INITIAL_PRODUCT);
+    setSuccess(true);
+
 }
 
-  return <>  
-  <Container textAlign='justified'>
-  <Header as="h2" >
-    Sell your sheet
-  </Header>
-  <Divider />
-
-  <Form>
-    <Form.Group >  
-      <Form.Field 
-      control ={Input} 
-      name ="name " 
-      label = "Product Name" 
-      placeholder= "Name"
-      onChange={handleChange} /> 
-       <Form.Field 
-       control ={Input} 
-       name ="price " 
-      label = "Price"
-       placeholder= "Price" 
-       type ="number" 
-      min ="0"
-       step ="1"
-       onChange={handleChange} />
-      <Form.Field
-      control={Select}
-       options={SchoolOf}
-       name ="school_of " 
-      label = "School of" 
-      placeholder= "School of"
-      onChange={handleChange} />
-    </Form.Group> 
-    <Form.Field 
-    control ={Input}
-    name ="description " 
-      label = "Description"
-       placeholder= "Description" 
-       control ="textarea"
-       onChange={handleChange} />
-  </Form>
-  <Form>
-    <Form.Group >  
-    <Form.Field 
-    control ={Input} 
-    name ="example " 
-      placeholder= "Example page" 
-      type ="file"
-       content ="Select Image" 
-      label = "Example Page" 
-      accept ="image/*"
-      onChange={handleChange} />
-       <Form.Field 
-       control ={Input} 
-       name ="uploadfile " 
-       placeholder= "Upload your Sheet" 
-       type ="file"
-        content ="Select file" 
-      label = "Upload File"
-      accept ="file/*"
-      onChange={handleChange}  />
-    </Form.Group> 
-     </Form>
-     <Form.Field 
-     control={Button} 
-     color ="blue"
-      content ="Submit" 
-      />
-  </Container>
-  </>;
+  return (
+    <>
+      <Header as="h2" >
+         Create you sheet
+      </Header>
+      <Divider />
+      <Form   
+       //* loading={loading}
+        success={success}
+        onSubmit={handleSubmit}>
+            <Message error header="Oops!" content={error} />
+        <Message
+          success
+          icon="check"
+          header="Success!"
+          content="Your product has been posted"
+        />
+        <Form.Group widths="equal">
+          <Form.Field
+            control={Input}
+            type="text"
+            name="name"
+            label="Name"
+            placeholder="Name"
+            value={product.name}
+            onChange={handleChange}
+          />
+          <Form.Field
+            control={Input}
+            name="price"
+            label="Price"
+            placeholder="Price"
+            min="0"
+            step="1"
+            type="number"
+            value={product.price}
+            onChange={handleChange}
+          />
+             <Form.Field
+              control={Select}
+             options={schoolgroup}
+            name="school_of"
+            label="School of"
+            placeholder="School of"
+            key ={product.school_of}
+            value={product.school_of}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Image src={mediaPreview} rounded centered size="small" />
+        <Form.Field
+          control={TextArea}
+          name="description"
+          label="Description"
+          placeholder="Description"
+          onChange={handleChange}
+          value={product.description}
+        />
+          <Form.Group widths="equal">
+          <Form.Field
+            control={Input}
+            name="example"
+            type="file"
+            label="Example page"
+            accept="image/*"
+            content="Select Image"
+            onChange={handleChange}
+          />
+           <Form.Field
+            control={Input}
+            name="uploadfile"
+            type="file"
+            label="Upload"
+            accept=".doc,.docx,.pdf"
+            content="Select File"
+            onChange={handleChange}
+          />
+          </Form.Group>
+        <Form.Field
+          control={Button}
+          color="blue"
+          icon="pencil alternate"
+          content="Submit"
+          type="submit"
+        />
+      </Form>
+    </>
+  );
 }
 
 export default CreateProduct;
