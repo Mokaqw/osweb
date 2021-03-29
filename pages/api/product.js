@@ -5,6 +5,9 @@ export default async (req, res) => {
     case "GET":
       await handleGetRequest(req, res);
       break;
+    case "POST":
+      await handlePostRequest(req, res);
+      break;
     case "DELETE":
       await handleDeleteRequest(req, res);
       break;
@@ -19,7 +22,23 @@ async function handleGetRequest(req, res) {
   const product = await Product.findOne({ _id });
   res.status(200).json(product);
 }
-
+async function handlePostRequest(req, res) {
+  const { name, price, description, example, uploadfile, school_of} = req.body;
+      if (!name || !price || !description || !example || !uploadfile || !school_of) {
+          return res.status(422).send("Please complete all the fields.");
+      }
+      const product = await new Product({
+          name,
+          price,
+          description,
+          example,
+          uploadfile,
+          school_of
+        
+      }).save();
+      res.status(201).json(product);//201 status code for product created.
+ 
+  }
 async function handleDeleteRequest(req, res) {
   const { _id } = req.query;
   await Product.findOneAndDelete({ _id });
