@@ -5,7 +5,7 @@ import Header from "./Header";
 import HeadContent from "./HeadContent";
 
 
-function Layout({ children }) {
+function Layout({ children, user }) {
   return (
     <div style={{backgroundColor: "#FFFAF5" , }}>
       <Head>
@@ -18,7 +18,7 @@ function Layout({ children }) {
         />
         <title>Onesummary</title>
       </Head>
-      <Header />    
+      <Header user={user} />
     <Container textAlign='justified'  text style={{ paddingTop: "3em",minHeight: "100vh",}}   >
         {children}
       </Container>

@@ -11,9 +11,9 @@ function CartItemList() {
       </Header>
       <div>
         {user ? (
-           <Button color="blue">Login to Add Products</Button>
-        ) : (
           <Button color="green">View Products</Button>
+        ) : (
+          <Button color="blue">Login to Add Products</Button>
         )}
       </div>
     </Segment>

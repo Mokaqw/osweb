@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   Form,  Input,  TextArea,  Button,  Image,  Message,  Header,  Divider  ,Select
 } from "semantic-ui-react";
+import catchErrors from "../utils/catchErrors";
 const schoolgroup = [
   {key:'1',name:'School of Integrative Medicine',text:'School of Integrative Medicine', value: 'School of Integrative Medicine'}
  ,{key:'2',name:'School of Cosmetic Science',text:'School of Cosmetic Science', value: 'School of Cosmetic Science'}
@@ -21,7 +22,7 @@ const INITIAL_PRODUCT = {
     name: "",
     price: "",
     description:"" ,
-    example: "",
+    exampleUrl: "",
     uploadfile:"" ,
     school_of:"",
 };
@@ -36,11 +37,11 @@ function CreateProduct() {
 
   function handleChange(event) {
     const { name, value, files } = event.target;
-    if (name === "example") {   
-      setProduct(prevState => ({ ...prevState, example: files[0] }));
+    if (name === "exampleUrl") {   
+      setProduct(prevState => ({ ...prevState, exampleUrl: files[0] }));
       setMediaPreview(window.URL.createObjectURL(files[0]));
-    }else if (name === "uploadfile") {   
-        setProduct(prevState => ({ ...prevState, uploadfile: files[0] }));
+  //  }else if (name === "uploadfile") {   
+       // setProduct(prevState => ({ ...prevState, uploadfile: files[0] }));
     } else {
       setProduct(prevState => ({ ...prevState, [name]: value }));    
     }
@@ -48,29 +49,38 @@ function CreateProduct() {
 
   async function handleImageUpload() {
     const data = new FormData();
-    data.append('file', product.example);
+    data.append('file', product.exampleUrl);
+   // data.append('file', product.uploadfile);
     data.append('upload_preset', 'onesummary');
     data.append('cloud_name', 'moss4582');
     const response = await axios.post(process.env.CLOUDINARY_URL, data);
-    const example = response.data.url;
-    return example;
+    const fileUrl = response.data.url;
+    return fileUrl;
   }
 
 
 
- async function handleSubmit(event) { 
-    event.preventDefault();
-    console.log(product);
-    setLoading(true);
-    const example = await handleImageUpload();
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+      setLoading(true);
+      setError("");
+      const fileUrl = await handleImageUpload();
     const url = 'http://localhost:3000/api/product';
-    const { name, price, description,school_of ,uploadfile } = product;
-    const payload = { name, price, description, example ,school_of ,uploadfile };
+    const { name, price, description,school_of } = product;
+    const payload = { name, price, description, fileUrl ,school_of  };
     const response = await axios.post(url, payload);
     console.log({ response });
     setLoading(false);
     setProduct(INITIAL_PRODUCT);
     setSuccess(true);
+       } catch (error) {
+      catchErrors(error, setError);
+    } finally {
+      setLoading(false);
+    }
+  
+
 
 }
 
@@ -113,14 +123,12 @@ function CreateProduct() {
             onChange={handleChange}
           />
              <Form.Field
-              control={Select}
-             options={schoolgroup}
+              control={Input}
             name="school_of"
             label="School of"
             placeholder="School of"
             value={product.school_of}
-            onChange={
-              (handleChange)=>{setProduct(handleChange.target)}}
+            onChange={handleChange}
           />
         </Form.Group>
         <Image src={mediaPreview} rounded centered size="small" />
@@ -135,20 +143,11 @@ function CreateProduct() {
           <Form.Group widths="equal">
           <Form.Field
             control={Input}
-            name="example"
+            name="exampleUrl"
             type="file"
             label="Example page"
             accept="image/*"
             content="Select Image"
-            onChange={handleChange}
-          />
-           <Form.Field
-            control={Input}
-            name="uploadfile"
-            type="file"
-            label="Upload"
-            accept=".doc,.docx,.pdf"
-            content="Select File"
             onChange={handleChange}
           />
           </Form.Group>

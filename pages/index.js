@@ -6,7 +6,6 @@ import MainAttributes from '../components/_App/View/MainAttributes'
 
 function Main({products}) {
   return (<>
-     
      <MainView/>
   <MainAttributes/>
  </> )}
