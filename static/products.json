@@ -1,25 +1,15 @@
 [
-  {
-    "name": "Sheet 1 ",
-    "price": 300,
-    "description": "Description",
-    "school_of": "Ex",
-    "exampleUrl": "https://picsum.photos/200/300?random=1",
-    "uploadurl":"https://comcast.net/pellentesque/viverra/pede/ac/diam/cras.js?morbi=lectus&a=pellentesque&ipsum=eget&integer=nunc&a=donec&nibh=quis&in=orci&quis=eget&justo=orci&maecenas=vehicula&rhoncus=condimentum&aliquam=curabitur&lacus=in&morbi=libero&quis=ut&tortor=massa&id=volutpat&nulla=convallis&ultrices=morbi&aliquet=odio"
-  },
-  {"name": "Sheet 2 ",
-    "price": 100,
-    "description": "Description",
-    "school_of": "Ex",
-    "exampleUrl": "https://picsum.photos/200/300?random=1",
-    "uploadurl":"https://comcast.net/pellentesque/viverra/pede/ac/diam/cras.js?morbi=lectus&a=pellentesque&ipsum=eget&integer=nunc&a=donec&nibh=quis&in=orci&quis=eget&justo=orci&maecenas=vehicula&rhoncus=condimentum&aliquam=curabitur&lacus=in&morbi=libero&quis=ut&tortor=massa&id=volutpat&nulla=convallis&ultrices=morbi&aliquet=odio"
-  },
 
-{"name": "Sheet 3 ",
-  "price": 100,
-  "description": "Description",
-  "school_of": "Ex",
-  "exampleUrl": "https://picsum.photos/200/300?random=1",
-  "uploadurl":"https://comcast.net/pellentesque/viverra/pede/ac/diam/cras.js?morbi=lectus&a=pellentesque&ipsum=eget&integer=nunc&a=donec&nibh=quis&in=orci&quis=eget&justo=orci&maecenas=vehicula&rhoncus=condimentum&aliquam=curabitur&lacus=in&morbi=libero&quis=ut&tortor=massa&id=volutpat&nulla=convallis&ultrices=morbi&aliquet=odio"
-}
+ 
+  {"name": "สรุป EE global ",
+    "price": 20,
+    "description": "course code 1001204 สรุป EE global มีจำนวน 8 หน้า มีสรุปทุกบทเรียน ",
+    "school_of": "Liberal Art",
+    "exampleUrl": "https://cdn.discordapp.com/attachments/765434728202764293/915214758519652372/unknown.png",
+    "category": {
+      "_id" : "6179db33ef0ea111f47e6e95"
+  },
+  "countInStock": 0
+  }
+
 ]

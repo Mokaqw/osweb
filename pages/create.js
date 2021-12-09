@@ -5,18 +5,18 @@ import {
 } from "semantic-ui-react";
 import catchErrors from "../utils/catchErrors";
 const schoolgroup = [
-  {key:'1',name:'School of Integrative Medicine',text:'School of Integrative Medicine', value: 'School of Integrative Medicine'}
- ,{key:'2',name:'School of Cosmetic Science',text:'School of Cosmetic Science', value: 'School of Cosmetic Science'}
- ,{key:'3',name:'School of Dentistry',text:'School of Dentistry', value: 'School of Dentistry'}
- ,{key:'4',name:'School of Medicine',text:'School of Medicine', value: 'School of Medicine'}
- ,{key:'5',name:'School of Nursing',text:'School of Nursing', value: 'School of Nursing'}
- ,{key:'6',name:'School of Science',text:'School of Science', value: 'School of Science'}
- ,{key:'7',name:'School of Information Technology',text:'School of Information Technology', value: 'School of Information Technology'}
- ,{key:'8',name:'School of Social Innovation',text:'School of Social Innovation', value: 'School of Social Innovation'}
- ,{key:'9',name:'School of Agro-Industry',text:'School of Agro-Industry', value: 'School of Agro-Industry'}
- ,{key:'10',name:'School of Management',text:'School of Management', value: 'School of Management'}
- ,{key:'11',name:'School of Liberal Arts',text:'School of Liberal Arts', value: 'School of School of Law'}
- ,{key:'12',name:'School of Sinology',text:'School of Sinology' ,value: 'School of Sinology'}
+  {key:'1',name:'School of Integrative Medicine',text:'School of Integrative Medicine', value: ' Integrative Medicine'}
+ ,{key:'2',name:'School of Cosmetic Science',text:'School of Cosmetic Science', value: ' Cosmetic Science'}
+ ,{key:'3',name:'School of Dentistry',text:'School of Dentistry', value: 'Dentistry'}
+ ,{key:'4',name:'School of Medicine',text:'School of Medicine', value: ' Medicine'}
+ ,{key:'5',name:'School of Nursing',text:'School of Nursing', value: ' Nursing'}
+ ,{key:'6',name:'School of Science',text:'School of Science', value: ' Science'}
+ ,{key:'7',name:'School of Information Technology',text:'School of Information Technology', value: ' Information Technology'}
+ ,{key:'8',name:'School of Social Innovation',text:'School of Social Innovation', value: 'Social Innovation'}
+ ,{key:'9',name:'School of Agro-Industry',text:'School of Agro-Industry', value: ' Agro-Industry'}
+ ,{key:'10',name:'School of Management',text:'School of Management', value: 'Management'}
+ ,{key:'11',name:'School of Liberal Arts',text:'School of Liberal Arts', value: 'School of Law'}
+ ,{key:'12',name:'School of Sinology',text:'School of Sinology' ,value: ' Sinology'}
  ,{key:'13',name:"School  of Law", text:"School  of Law", value: "School  of Law"}]
 const INITIAL_PRODUCT = {
     name: "",
@@ -40,8 +40,8 @@ function CreateProduct() {
     if (name === "exampleUrl") {   
       setProduct(prevState => ({ ...prevState, exampleUrl: files[0] }));
       setMediaPreview(window.URL.createObjectURL(files[0]));
-  //  }else if (name === "uploadfile") {   
-       // setProduct(prevState => ({ ...prevState, uploadfile: files[0] }));
+   }else if (name === "uploadfile") {   
+      setProduct(prevState => ({ ...prevState, uploadfile: files[0] }));
     } else {
       setProduct(prevState => ({ ...prevState, [name]: value }));    
     }
@@ -50,37 +50,46 @@ function CreateProduct() {
   async function handleImageUpload() {
     const data = new FormData();
     data.append('file', product.exampleUrl);
-   // data.append('file', product.uploadfile);
-    data.append('upload_preset', 'onesummary');
+    data.append('upload_preset', 'onsummary');
     data.append('cloud_name', 'moss4582');
     const response = await axios.post(process.env.CLOUDINARY_URL, data);
-    const fileUrl = response.data.url;
-    return fileUrl;
+    const exampleUrl = response.data.url;
+    return exampleUrl;
+  }
+  async function handleImageUpload1() {
+    const data = new FormData();
+    data.append('file', product.uploadfile);
+    data.append('upload_preset', 'onsummary');
+    data.append('cloud_name', 'moss4582');
+    const response = await axios.post(process.env.CLOUDINARY_URL, data);
+    const uploadfile = response.data.url;
+    return uploadfile;
   }
 
 
 
   async function handleSubmit(event) {
-    try {
+   try {
       event.preventDefault();
       setLoading(true);
       setError("");
-      const fileUrl = await handleImageUpload();
+      const exampleUrl = await handleImageUpload();
+      const uploadfile = await handleImageUpload1();
     const url = 'http://localhost:3000/api/product';
-    const { name, price, description,school_of } = product;
-    const payload = { name, price, description, fileUrl ,school_of  };
+    const { name, price, description,school_of  } = product;
+    const payload = { name, price, description, exampleUrl ,school_of , uploadfile  };
     const response = await axios.post(url, payload);
     console.log({ response });
     setLoading(false);
-    setProduct(INITIAL_PRODUCT);
+   setProduct(INITIAL_PRODUCT);
     setSuccess(true);
        } catch (error) {
-      catchErrors(error, setError);
+     catchErrors(error, setError);
     } finally {
       setLoading(false);
     }
   
-
+    
 
 }
 
@@ -92,6 +101,7 @@ function CreateProduct() {
       <Divider />
       <Form   
         loading={loading}
+        error={Boolean(error)}
         success={success}
         onSubmit={handleSubmit}>
             <Message error header="Oops!" content={error} />
@@ -99,7 +109,7 @@ function CreateProduct() {
           success
           icon="check"
           header="Success!"
-          content="Your product has been posted"
+          content="Success"
         />
         <Form.Group widths="equal">
           <Form.Field
@@ -125,8 +135,8 @@ function CreateProduct() {
              <Form.Field
               control={Input}
             name="school_of"
-            label="School of"
-            placeholder="School of"
+            label="School "
+            placeholder="School "
             value={product.school_of}
             onChange={handleChange}
           />
@@ -141,6 +151,15 @@ function CreateProduct() {
           value={product.description}
         />
           <Form.Group widths="equal">
+          <Form.Field
+          control={Input}
+           name="uploadfile"
+            type="file"
+            label="File"
+            accept="file/*"
+            content="Select Image"
+            onChange={handleChange}
+          />
           <Form.Field
             control={Input}
             name="exampleUrl"

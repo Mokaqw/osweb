@@ -23,10 +23,22 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  uploadurl: {
+  uploadfile: {
+    type: String,
+    required: true
+  },
+  status: {
     type: String,
     required: true,
-  },
+    default: "Unavialible",
+    enum: ["Unavialible", "avialible"]
+  }
+ // countInStock:{
+  //  type: String,
+  //  required: true
+ // }
 });
 export default mongoose.models.Product ||
-  mongoose.model("Product", ProductSchema);
+ mongoose.model("Product", ProductSchema);
+  //const Product = mongoose.model('Product', ProductSchema);
+//module.exports = Product; 

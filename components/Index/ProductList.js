@@ -1,7 +1,7 @@
 import { Card } from "semantic-ui-react";
 import ReadMoreReact from 'read-more-react';
-function ProductList({ products , }) {
-  function mapProductsToItems(products ,) {
+function ProductList({ products  }) {
+  function mapProductsToItems(products) {
     return products.map(product => ({
         header: product.name,
         meta: product.school_of,
@@ -11,6 +11,7 @@ function ProductList({ products , }) {
         ideal={100}
         max={200}
         readMoreText=""
+        color="black"
        />
         , 
         extra: `${product.price}    BATH` ,

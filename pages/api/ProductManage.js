@@ -20,5 +20,5 @@ export default async (req, res) => {
       .limit(pageSize);
   }
   // const products = await Product.find();
-  res.status(200).json({ products, totalPages });
+  res.status(200).json(products);
 };
