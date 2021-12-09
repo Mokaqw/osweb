@@ -2,7 +2,6 @@ import { Menu,Container ,Image,Icon, Select, } from 'semantic-ui-react'
 import Link from 'next/link'
 import Router,{useRouter} from 'next/router'
 import NProgress from 'nprogress'
-import Search  from '../Search'
 import { handleLogout } from "../../utils/auth";
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();

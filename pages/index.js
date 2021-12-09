@@ -13,8 +13,5 @@ Main.getInitialProps = async () =>{
   const url ='http://localhost:3000/api/products'
   const reponse = await axios.get(url)
   return {products: reponse.data};
-  //fetch data on server 
-  //return reponse data aas an object
-  // note :this object will be  merged with existing props
 }
 export default Main;

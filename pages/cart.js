@@ -17,16 +17,16 @@ function Cart({ products, user }) {
     const url = `${baseUrl}/api/cart`;
     const token = cookie.get("token");
     const payload = {
-      //The server need the product id of the product to remove from the cart
+   
       params: { productId },
-      //The server need the token to make sure that you are authorized to remove the product
+  
       headers: { Authorization: token }
     };
     const response = await axios.delete(url, payload);
     setCartProducts(response.data);
-    //Now that we have the updated data from the response, we send cartProducts instead of products
+   
   }
-  async function handleCheckout(paymentData) {//Pass this as a named prop to the CartSummary
+  async function handleCheckout(paymentData) {
     try {
       setLoading(true);
       const url = `${baseUrl}/api/checkout`;
@@ -42,7 +42,7 @@ function Cart({ products, user }) {
     }
   }
   return (
-    /* We also need to send the function handleRemoveFromCart to the CartItemList */
+   
     <Segment loading={loading}>
       <CartItemList
         handleRemoveFromCart={handleRemoveFromCart}
@@ -64,10 +64,7 @@ Cart.getInitialProps = async ctx => {
   if (!token) {
     return { products: [] };
   }
-  //For our url we will make a request to a new endpoint in the api folder
   const url = `${baseUrl}/api/cart`;
-  //The payload will contain our header, the aurthorization will be set to
-  // the token, so that only logged in users can get access.
   const payload = { headers: { Authorization: token } };
   const response = await axios.get(url, payload);
   return { products: response.data };

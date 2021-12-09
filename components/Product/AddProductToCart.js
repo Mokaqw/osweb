@@ -29,17 +29,14 @@ function AddProductToCart({ user, productId }) {
       const url = `${baseUrl}/api/cart`;
       const payload = { quantity, productId };
       const token = cookie.get("token");
-      //Sending authorization header with the pay load for extra security
       const headers = { headers: { Authorization: token } };
-      //Since we want to update the array products in Cart.js, so we need
-      //a PUT request and not a POST request.
       await axios.put(url, payload, headers);
-      //To show that the product has been added message we will need a state success
+  
       setSuccess(true);
     } catch (error) {
-        catchErrors(error, window.alert);//To show an alert box in browser
+        catchErrors(error, window.alert);
     } finally {
-      setLoading(false);//Both successful or error case, stop the spinner.
+      setLoading(false);
     }
 
   }
@@ -51,21 +48,21 @@ function AddProductToCart({ user, productId }) {
       placeholder="Quantity"
       value={quantity}
       onChange={event => setQuantity(Number(event.target.value))}
-      action={//using nested ternary
+      action={
         user && success
           ? {
               color: "blue",
               content: "Item Added!",
               icon: "plus cart",
-              disabled: true //We will show this disabled button to show the message Item Added
+              disabled: true 
             }
           : user
           ? {
               color: "orange",
               content: "Add to Cart",
               icon: "plus cart",
-              loading,//This means set loading to true if const loading above is true. loading = loading; 
-              disabled: loading, //Disable this orange button when loading is true i.e., we are trying to add a product to cart.
+              loading,
+              disabled: loading, 
               onClick: handleAddProductToCart
             }
           : {

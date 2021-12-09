@@ -9,7 +9,7 @@ import {
   Image
 } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import formatDate from "../../utils/formatDate";
+
 
 function AccountOrders({ orders }) {
   const router = useRouter();
@@ -46,7 +46,7 @@ function AccountOrders({ orders }) {
         )
       }
     }));
-  }//function mapOrdersToPanels ends here
+  }
 
   return (
     <>
