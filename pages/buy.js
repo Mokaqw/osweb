@@ -19,15 +19,8 @@ Buy.getInitialProps =  async ctx => {
   const size = 4;
   const url ='http://localhost:3000/api/products'
   const payload = { params: { page, size } };
-  // fetch data on server
   const response = await axios.get(url, payload);
-  // return response data as an object
   return response.data;
-  // note: this object will be merged with existing props
 };
-
-  //fetch data on server 
-  //return reponse data aas an object
-  // note :this object will be  merged with existing props
 
 export default Buy;

@@ -88,11 +88,7 @@ function CreateProduct() {
     } finally {
       setLoading(false);
     }
-  
-    
-
 }
-
   return (
     <>
       <Header as="h2" >
